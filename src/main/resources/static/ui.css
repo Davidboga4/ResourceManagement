@@ -1,0 +1,26 @@
+table{
+    width: 40%;
+    background-color: #3C99DC;
+    position: absolute;
+    left: 25rem;
+    top: 10rem;
+    align-items: center;
+    border-radius: 10px;
+    border-spacing: 50px;
+  }
+  
+  button{
+    text-decoration: none;
+    align-items: center;
+    margin:  10px;
+    padding: 10px;
+    width: 70px;
+    border-radius: 5px;
+    color: white;
+    background-color: black;
+  }
+  
+  button a {
+    color: white;
+    text-decoration:none;
+  }

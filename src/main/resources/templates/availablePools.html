@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI TASK</title>
+    <link rel="stylesheet" href="ui.css">
+</head>
+
+<body>
+<a th:href="@{/showNewEmployeeForm}"><button> Add</button></a>
+
+<table>
+    <tr>
+        <th><button><a th:href="@{'/details/Java'}">JAVA</a></button></th>
+        <th><button><a th:href="@{'/details/UI'}">UI</a></button></th>
+        <th><button><a th:href="@{'/details/Support'}">Support</a></button></th>
+    </tr>
+
+    <tr>
+        <th><button><a th:href="@{'/details/Devops'}">DEVOps</a></button></th>
+        <th><button><a th:href="@{'/details/SDET'}">SDET</a></button></th>
+        <th><button><a th:href="@{'/details/DE'}">DE</a></button></th>
+    </tr>
+</table>
+</body>
+</html>

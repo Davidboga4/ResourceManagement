@@ -1,0 +1,89 @@
+package com.RMP.resource_management;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+@Controller
+public class EmployeeController {
+
+    @Autowired
+    private EmployeeService employeeService;
+
+
+    @GetMapping("/")
+    public String viewHomePage(Model model) {
+        return findPaginated(1, model);
+    }
+
+    @GetMapping("/showNewEmployeeForm")
+    public String showNewEmployeeForm(Model model) {
+        Employee employee = new Employee();
+        model.addAttribute("employee", employee);
+        return "new_employee";
+    }
+
+    @GetMapping("/track/{firstName}")
+    public String fetchByTrack(@PathVariable(value = "firstName") String firstName, Model model) {
+        List<Employee> employee = employeeService.getEmployeesByTrack(firstName);
+//        if(employee.isEmpty()){
+//           return "index";
+//        }
+//        List<Employee> temp = new java.util.ArrayList<>(Collections.emptyList());
+//        for (Employee emp: employee) {
+//           if(emp.getFirstName().equals(firstName)){
+//              temp.add(emp);
+//                        System.out.println(emp.getFirstName());
+//           }
+//        }
+        model.addAttribute("listEmployees", employee);
+        return "searchoptions";
+    }
+
+    @GetMapping("/availablePools")
+    public String availablePools() {
+        return "availablePools";
+    }
+
+    @PostMapping("/saveEmployee")
+    public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+        employeeService.saveEmployee(employee);
+        return "redirect:/";
+    }
+
+    @GetMapping("/deleteEmployee/{id}")
+    public String deleteEmployee(@PathVariable(value = "id") Long id) {
+        this.employeeService.deleteEmployeeById(id);
+        return "redirect:/";
+    }
+
+    @GetMapping("/page/{pageNo}")
+    public String findPaginated(@PathVariable(value = "pageNo") int pageNo, Model model) {
+        int pageSize = 10;
+
+        Page<Employee> page = employeeService.findPaginated(pageNo, pageSize);
+        List<Employee> listEmployees = page.getContent();
+
+        model.addAttribute("currentPage", pageNo);
+        model.addAttribute("totalPages", page.getTotalPages());
+        model.addAttribute("totalItems", page.getTotalElements());
+        model.addAttribute("listEmployees", listEmployees);
+        return "index";
+    }
+}

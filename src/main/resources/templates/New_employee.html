@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>New Details</title>
+</head>
+<body>
+<div class="container">
+<h1>Add New Details</h1>
+<hr>
+<h2>Save</h2>
+
+ 
+
+<form action="#" th:action="@{/saveEmployee}" th:object="${employee}"
+method="POST">
+<input type="text" th:field="*{EmpID}"
+placeholder="Employee ID">
+<input type="text" th:field="*{Name}" 
+placeholder="Name">
+<input type="text" th:field="*{RM}"
+placeholder="RM">
+<input type="text" th:field="*{BAND}"
+placeholder="Band">
+<input type="text" th:field="*{DOJ}"
+placeholder="DOJ">
+<input type="text" th:field="*{SkillSet}"
+placeholder="SkillSet">
+<input type="text" th:field="*{RAS_Allocation}"
+placeholder="RAS Allocation" >
+<input type="text" th:field="*{Remarks}"
+placeholder="Remarks">
+<button type="submit" > Save</button>
+</form>
+
+ 
+
+<hr>
+<a th:href = "@{/}"> Back to List</a>
+</div>
+</body>
+</html>
