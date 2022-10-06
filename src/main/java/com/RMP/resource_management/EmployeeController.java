@@ -7,17 +7,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
@@ -25,7 +20,6 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
-
 
     @GetMapping("/")
     public String viewHomePage(Model model) {
@@ -36,29 +30,25 @@ public class EmployeeController {
     public String showNewEmployeeForm(Model model) {
         Employee employee = new Employee();
         model.addAttribute("employee", employee);
-        return "new_employee";
-    }
-
-    @GetMapping("/track/{firstName}")
-    public String fetchByTrack(@PathVariable(value = "firstName") String firstName, Model model) {
-        List<Employee> employee = employeeService.getEmployeesByTrack(firstName);
-//        if(employee.isEmpty()){
-//           return "index";
-//        }
-//        List<Employee> temp = new java.util.ArrayList<>(Collections.emptyList());
-//        for (Employee emp: employee) {
-//           if(emp.getFirstName().equals(firstName)){
-//              temp.add(emp);
-//                        System.out.println(emp.getFirstName());
-//           }
-//        }
-        model.addAttribute("listEmployees", employee);
-        return "searchoptions";
+        return "New_employee";
     }
 
     @GetMapping("/availablePools")
     public String availablePools() {
         return "availablePools";
+    }
+
+    @GetMapping("/details/{value}")
+    public String filterDetails(@PathVariable(value = "value") String value, Model model) {
+        List<Employee> employees = employeeService.getAllEmployees();
+        List<Employee> temp = new ArrayList<Employee>();;
+        for (Employee profile: employees) {
+            if(profile.getSkillset().toLowerCase().equals(value.toLowerCase())) {
+                temp.add(profile);
+            }
+        }
+        model.addAttribute("listEmployees", temp);
+        return "details";
     }
 
     @PostMapping("/saveEmployee")

@@ -10,57 +10,37 @@
 <body>
 
 <div align="center">
-<table border="2">
-<thead>
-<tr>
-<th>
-EmpID
-</th>
-<th>
-Name
-</th>
-<th>
-RM
-</th>
-<th>
-Band
-</th>
-<th>
-DOJ
-</th>
-<th>
-SkillSet
-</th>
-<th>
-RAS allocation
-</th>
-<th>
-Remarks
-</th>
-<th>
-Status
-</th>
-<th>
-Action
-</th>
-</tr>
-</thead>
-    <tbody>
-    <tr th:each="employee : ${listEmployees}">
-	<td th:text="${employee.EmpID}"></td>
-	<td th:text="${employee.Name}"></td>
-	<td th:text="${employee.RM}"></td>
-	<td th:text="${employee.BAND}"></td>
-	<td th:text="${employee.DOJ}"></td>
-	<td th:text="${employee.Skill_Set}"></td>
-	<!--td th:text="${employee.Subtopic}"></td-->
-	<td th:text="${employee.RAS_Allocation}"></td>
-	<td th:text="${employee.Remarks}"></td>
-	<!--td><button id="myBtn" onclick="myFunction()">Block</button>></td-->
-	<td><a th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete</a></td>
-	</tr>
-    </tbody>
-</table>
+    <table border="2">
+        <thead>
+        <tr>
+            <th> EmpID </th>
+            <th> Name </th>
+            <th> RM </th>
+            <th> Band </th>
+            <th> DOJ </th>
+            <th> SkillSet </th>
+            <th> RAS allocation </th>
+            <th> Remarks </th>
+<!--            <th> Status </th>-->
+            <th> Action </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${listEmployees}">
+            <td th:text="${employee.EmpID}"></td>
+            <td th:text="${employee.Name}"></td>
+            <td th:text="${employee.RM}"></td>
+            <td th:text="${employee.BAND}"></td>
+            <td th:text="${employee.DOJ}"></td>
+            <td th:text="${employee.Skill_Set}"></td>
+            <!--td th:text="${employee.Subtopic}"></td-->
+            <td th:text="${employee.RAS_Allocation}"></td>
+            <td th:text="${employee.Remarks}"></td>
+            <!--td><button id="myBtn" onclick="myFunction()">Block</button>></td-->
+            <td><a th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
 </body>
