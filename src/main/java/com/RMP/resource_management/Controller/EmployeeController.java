@@ -1,10 +1,7 @@
-package com.RMP.resource_management;
+package com.RMP.resource_management.Controller;
 
-
-import java.util.ArrayList;
-import java.util.List;
-
-
+import com.RMP.resource_management.EmployeeService;
+import com.RMP.resource_management.Model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -14,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class EmployeeController {
@@ -41,9 +40,10 @@ public class EmployeeController {
     @GetMapping("/details/{value}")
     public String filterDetails(@PathVariable(value = "value") String value, Model model) {
         List<Employee> employees = employeeService.getAllEmployees();
-        List<Employee> temp = new ArrayList<Employee>();;
-        for (Employee profile: employees) {
-            if(profile.getSkillset().toLowerCase().equals(value.toLowerCase())) {
+        List<Employee> temp = new ArrayList<Employee>();
+        ;
+        for (Employee profile : employees) {
+            if (profile.getSkillset().toLowerCase().equals(value.toLowerCase())) {
                 temp.add(profile);
             }
         }

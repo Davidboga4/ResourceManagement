@@ -1,4 +1,4 @@
-package com.RMP.resource_management;
+package com.RMP.resource_management.Model;
 
 import javax.persistence.Column;
 

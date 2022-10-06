@@ -19,9 +19,10 @@
             <th> Band </th>
             <th> DOJ </th>
             <th> SkillSet </th>
+            <th> Sub Set </th>
             <th> RAS allocation </th>
             <th> Remarks </th>
-<!--            <th> Status </th>-->
+            <th> Status </th>
             <th> Action </th>
         </tr>
         </thead>
@@ -33,10 +34,10 @@
             <td th:text="${employee.BAND}"></td>
             <td th:text="${employee.DOJ}"></td>
             <td th:text="${employee.Skill_Set}"></td>
-            <!--td th:text="${employee.Subtopic}"></td-->
+            <td th:text="${employee.Sub_Set}"></td>
             <td th:text="${employee.RAS_Allocation}"></td>
             <td th:text="${employee.Remarks}"></td>
-            <!--td><button id="myBtn" onclick="myFunction()">Block</button>></td-->
+            <td><button >Block Profile</button></td>
             <td><a th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete</a></td>
         </tr>
         </tbody>
