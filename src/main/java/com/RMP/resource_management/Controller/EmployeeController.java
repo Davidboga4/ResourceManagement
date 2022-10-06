@@ -1,7 +1,9 @@
 package com.RMP.resource_management.Controller;
 
-import com.RMP.resource_management.EmployeeService;
 import com.RMP.resource_management.Model.Employee;
+import com.RMP.resource_management.Model.FormDetails;
+import com.RMP.resource_management.Service.EmployeeService;
+import com.RMP.resource_management.Service.FormService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -19,6 +22,9 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private FormService formService;
 
     @GetMapping("/")
     public String viewHomePage(Model model) {
@@ -55,6 +61,38 @@ public class EmployeeController {
     public String saveEmployee(@ModelAttribute("employee") Employee employee) {
         employeeService.saveEmployee(employee);
         return "redirect:/";
+    }
+
+    @GetMapping("/updateBlock/{id}")
+    public String updateBlock(@PathVariable(value = "id") long id, Model model) {
+        Employee e = employeeService.getEmployeeById(id);
+        e.setBlockTime(new Date());
+        e.setBlock("true");
+        this.employeeService.saveEmployee(e);
+        return "redirect:/";
+    }
+
+    @GetMapping("/formPage/{id}")
+    public String formPage(@PathVariable(value = "id") long id, Model model) {
+//        System.out.println(id);
+        model.addAttribute("empId", id);
+        model.addAttribute("formDetails", new FormDetails());
+        return "formPage";
+    }
+
+    @PostMapping("/saveForm/{id}")
+    public String saveFormDetails(@ModelAttribute("formDetails") FormDetails formDetail,
+                                  @PathVariable(value = "id") long id, Model model) {
+        formDetail.setEmpID(id);
+        this.formService.saveFormDetails(formDetail);
+        model.addAttribute("empId", id);
+        model.addAttribute("formDetails", new FormDetails());
+        model.addAttribute("msg", "Form Submitted successfully");
+        Employee employee = employeeService.getEmployeeById(id);
+        employee.setBlockTime(new Date());
+        employee.setBlock("true");
+        this.employeeService.saveEmployee(employee);
+        return "formPage";
     }
 
     @GetMapping("/deleteEmployee/{id}")

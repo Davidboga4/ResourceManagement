@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
 @Table(name = "employee")
@@ -32,6 +33,12 @@ public class Employee {
     private String RAS_Allocation;
     @Column(name = "Remarks")
     private String Remarks;
+
+    @Column
+    private String block;
+
+    @Column
+    private Date blockTime;
 
     public long getId() {
         return id;
@@ -127,5 +134,21 @@ public class Employee {
 
     public void setSkill_Set(String skill_Set) {
         Skill_Set = skill_Set;
+    }
+
+    public String getBlock() {
+        return block;
+    }
+
+    public void setBlock(String block) {
+        this.block = block;
+    }
+
+    public Date getBlockTime() {
+        return blockTime;
+    }
+
+    public void setBlockTime(Date blockTime) {
+        this.blockTime = blockTime;
     }
 }

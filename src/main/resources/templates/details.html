@@ -37,8 +37,11 @@
             <td th:text="${employee.Sub_Set}"></td>
             <td th:text="${employee.RAS_Allocation}"></td>
             <td th:text="${employee.Remarks}"></td>
-            <td><button >Block Profile</button></td>
-            <td><a th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete</a></td>
+            <td>
+                <a class="btn btn-secondary" th:if="${employee.block} == 'true'">Block</a>
+                <a class="btn btn-primary" th:if="${employee.block} != 'true'" th:href="@{/formPage/{id}(id=${employee.EmpID})}">Block Profile</a>
+                <a class="btn btn-secondary">Reject</a></td>
+            <td><a th:href="@{/deleteEmployee/{id}(id=${employee.EmpID})}">Delete</a></td>
         </tr>
         </tbody>
     </table>
