@@ -1,6 +1,5 @@
 package com.RMP.resource_management.Service;
 
-
 import java.util.Collections;
 import java.util.List;
 
@@ -18,34 +17,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-
     @Override
     public List<Employee> getAllEmployees() {
         List<Employee> list = (List<Employee>) employeeRepository.findAll();
         return list;
-//return employeeRepository.findAll();
     }
 
     @Override
-    public Employee getEmployeeById(Long id){
-        return  employeeRepository.findById(id).orElse(null);
+    public Employee getEmployeeById(Long id) {
+        return employeeRepository.findById(id).orElse(null);
     }
-
- 
-
-
-/*@Override
-public List<Employee> listAll(String SkillSet) {
-    if (SkillSet != null) {
-        return employeeRepository.search(SkillSet);
-    }
-    return employeeRepository.findAll();
-}
-@Override
-public List<Employee> getByKeyword(String keyword)
-{
-      return employeeRepository.findBykeyword(keyword);
-}*/
 
 
     @Override

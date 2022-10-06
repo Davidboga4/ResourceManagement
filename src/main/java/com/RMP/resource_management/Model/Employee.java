@@ -15,8 +15,8 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(name = "EmpID")
-    private long EmpID;
+//    @Column(name = "EmpID")
+//    private long EmpID;
     @Column(name = "Name")
     private String Name;
     @Column(name = "RM")
@@ -37,7 +37,7 @@ public class Employee {
     @Column
     private String block;
 
-    @Column
+    @Column(name = "block_time")
     private Date blockTime;
 
     public long getId() {
@@ -46,14 +46,6 @@ public class Employee {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public long getEmpID() {
-        return EmpID;
-    }
-
-    public void setEmpID(Long EmpID) {
-        this.EmpID = EmpID;
     }
 
     public String getName() {
@@ -122,10 +114,6 @@ public class Employee {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public void setEmpID(long empID) {
-        EmpID = empID;
     }
 
     public String getSkill_Set() {

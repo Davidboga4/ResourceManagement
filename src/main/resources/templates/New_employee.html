@@ -12,7 +12,7 @@
 
     <form action="#" th:action="@{/saveEmployee}" th:object="${employee}"
           method="POST">
-        <input type="text" th:field="*{EmpID}"
+        <input type="text" th:field="*{id}"
                placeholder="Employee ID">
         <input type="text" th:field="*{Name}"
                placeholder="Name">
@@ -33,7 +33,7 @@
         <button type="submit"> Save</button>
     </form>
 
-    <hr><a th:href="@{/searchoptions}"> Back to List</a>
+    <hr><a th:href="@{/}"> Back to List</a>
 </div>
 </body>
 </html>

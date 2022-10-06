@@ -28,7 +28,7 @@
         </thead>
         <tbody>
         <tr th:each="employee : ${listEmployees}">
-            <td th:text="${employee.EmpID}"></td>
+            <td th:text="${employee.id}"></td>
             <td th:text="${employee.Name}"></td>
             <td th:text="${employee.RM}"></td>
             <td th:text="${employee.BAND}"></td>
@@ -38,10 +38,12 @@
             <td th:text="${employee.RAS_Allocation}"></td>
             <td th:text="${employee.Remarks}"></td>
             <td>
-                <a class="btn btn-secondary" th:if="${employee.block} == 'true'">Block</a>
-                <a class="btn btn-primary" th:if="${employee.block} != 'true'" th:href="@{/formPage/{id}(id=${employee.EmpID})}">Block Profile</a>
-                <a class="btn btn-secondary">Reject</a></td>
-            <td><a th:href="@{/deleteEmployee/{id}(id=${employee.EmpID})}">Delete</a></td>
+                <a class="btn btn-secondary" th:if="${employee.block} != 'true'">Block</a>
+                <a class="btn btn-primary" th:if="${employee.block} == 'true'" th:href="@{/updateBlock/{id}(id=${employee.id})}">Block</a>
+                <a class="btn btn-primary" th:if="${employee.block} == 'true'"
+                   th:href="@{/formPage/{id}(id=${employee.id})}">Block Profile</a>
+                <a class="btn btn-primary" th:if="${employee.block} == 'true'">Reject</a></td>
+            <td><a th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete</a></td>
         </tr>
         </tbody>
     </table>

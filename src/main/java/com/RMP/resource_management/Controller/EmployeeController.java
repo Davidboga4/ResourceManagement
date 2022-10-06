@@ -8,14 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @Controller
 public class EmployeeController {
@@ -28,6 +23,19 @@ public class EmployeeController {
 
     @GetMapping("/")
     public String viewHomePage(Model model) {
+        List<Employee> profiles = employeeService.getAllEmployees();
+        for (Employee employee: profiles) {
+            if(employee.getBlockTime() != null){
+                long diffInMillies1 = Math.abs(new Date().getTime() - employee.getBlockTime().getTime());
+                long diff1 = TimeUnit.DAYS.convert(diffInMillies1, TimeUnit.MILLISECONDS);
+                if(diff1 >= 2){
+                    employee.setBlockTime(null);
+                    employee.setBlock("true");
+                    employeeService.saveEmployee(employee);
+                }
+            }
+        }
+        model.addAttribute("listProfiles", profiles);
         return findPaginated(1, model);
     }
 
@@ -59,15 +67,17 @@ public class EmployeeController {
 
     @PostMapping("/saveEmployee")
     public String saveEmployee(@ModelAttribute("employee") Employee employee) {
+        employee.setBlock("true");
         employeeService.saveEmployee(employee);
         return "redirect:/";
     }
 
     @GetMapping("/updateBlock/{id}")
-    public String updateBlock(@PathVariable(value = "id") long id, Model model) {
+    public String updateBlock(@PathVariable(value = "id") long id) {
         Employee e = employeeService.getEmployeeById(id);
+        System.out.println(e.getName());
         e.setBlockTime(new Date());
-        e.setBlock("true");
+        e.setBlock("false");
         this.employeeService.saveEmployee(e);
         return "redirect:/";
     }
@@ -90,7 +100,7 @@ public class EmployeeController {
         model.addAttribute("msg", "Form Submitted successfully");
         Employee employee = employeeService.getEmployeeById(id);
         employee.setBlockTime(new Date());
-        employee.setBlock("true");
+        employee.setBlock("false");
         this.employeeService.saveEmployee(employee);
         return "formPage";
     }
