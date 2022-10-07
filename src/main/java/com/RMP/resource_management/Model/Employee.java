@@ -36,9 +36,11 @@ public class Employee {
 
     @Column
     private String block;
-
     @Column(name = "block_time")
     private Date blockTime;
+
+    @Column
+    private int blockCount;
 
     public long getId() {
         return id;
@@ -130,5 +132,13 @@ public class Employee {
 
     public void setBlockTime(Date blockTime) {
         this.blockTime = blockTime;
+    }
+
+    public int getBlockCount() {
+        return blockCount;
+    }
+
+    public void setBlockCount(int blockCount) {
+        this.blockCount = blockCount;
     }
 }

@@ -72,8 +72,9 @@ public class EmployeeController {
     @PostMapping("/saveEmployee")
     public String saveEmployee(@ModelAttribute("employee") Employee employee) {
         employee.setBlock("true");
+        employee.setBlockCount(0);
         employeeService.saveEmployee(employee);
-        return "redirect:/";
+        return "availablePools";
     }
 
     @GetMapping("/updateBlock/{id}")
@@ -121,6 +122,23 @@ public class EmployeeController {
     public String deleteEmployee(@PathVariable(value = "id") Long id) {
         this.employeeService.deleteEmployeeById(id);
         return "redirect:/";
+    }
+
+    @GetMapping("/reject/{id}")
+    public String reject(@PathVariable (value = "id") long id, Model model)
+    {
+        Employee employee = employeeService.getEmployeeById(id);
+        if(employee.getBlockCount() == 2){
+            employee.setBlock("false");
+            employee.setBlockCount(3);
+        }
+        else{
+            employee.setBlockCount(employee.getBlockCount() + 1);
+        }
+        employeeService.saveEmployee(employee);
+        List<Employee> employeesList = employeeService.getAllEmployees();
+        model.addAttribute("listEmployees", employeesList);
+        return "details";
     }
 
     @GetMapping("/page/{pageNo}")

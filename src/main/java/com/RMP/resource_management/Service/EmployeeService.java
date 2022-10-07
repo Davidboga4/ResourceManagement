@@ -18,5 +18,4 @@ public interface EmployeeService {
 
     Employee getEmployeeById(Long id);
     List<Employee> getEmployeesByTrack(String subSkill);
-//public List<Employee> getByKeyword(String keyword);
 }
