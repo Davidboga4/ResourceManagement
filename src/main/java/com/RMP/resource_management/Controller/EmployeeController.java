@@ -1,14 +1,13 @@
 package com.RMP.resource_management.Controller;
 
-import com.RMP.resource_management.Model.Employee;
-import com.RMP.resource_management.Model.FormDetails;
-import com.RMP.resource_management.Service.EmployeeService;
-import com.RMP.resource_management.Service.FormService;
+import com.RMP.resource_management.Model.*;
+import com.RMP.resource_management.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -19,24 +18,77 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @Autowired
+    private ManagerService managerService;
+
+    @Autowired
+    private ShareService shareService;
+
+    @Autowired
     private FormService formService;
 
     @GetMapping("/")
-    public String viewHomePage(Model model) {
+    public String viewHomePage() {
         List<Employee> profiles = employeeService.getAllEmployees();
-        for (Employee employee: profiles) {
-            if(employee.getBlockTime() != null){
+        for (Employee employee : profiles) {
+            if (employee.getBlockTime() != null) {
                 long diffInMillies1 = Math.abs(new Date().getTime() - employee.getBlockTime().getTime());
                 long diff1 = TimeUnit.DAYS.convert(diffInMillies1, TimeUnit.MILLISECONDS);
-                if(diff1 >= 2){
+                if (diff1 >= 2) {
                     employee.setBlockTime(null);
                     employee.setBlock("true");
                     employeeService.saveEmployee(employee);
                 }
             }
         }
-        model.addAttribute("listProfiles", profiles);
-        return findPaginated(1, model);
+        return "index";
+    }
+
+    @GetMapping("/manager/{id}")
+    public String filterShare(@PathVariable(value = "id") long id, Model model) {
+        Manager manager = managerService.getManagerDetails(id);
+        List<Share> share = shareService.getAllShareDetails();
+        List<Employee> employeeList = employeeService.getAllEmployees();
+        List<Employee> filterProfiles = new ArrayList<>();
+        for (int i = 0; i < share.size(); i++) {
+            if (share.get(i).getManager_id() == id) {
+                for (Employee employee : employeeList) {
+                    if (employee.getId() == share.get(i).getEmployee_id()) {
+                        filterProfiles.add(employee);
+                    }
+                }
+            }
+        }
+        model.addAttribute("manager_block", "true");
+        model.addAttribute("manager", manager);
+        model.addAttribute("listEmployees", filterProfiles);
+
+        return "details";
+    }
+
+    @GetMapping("/managerPage/{emp_id}")
+    public String viewManagerPage(@PathVariable(value = "emp_id") long emp_id, Model model) {
+        List<Manager> managerList = managerService.getAllManagerDetails();
+        List<Share> shareList = shareService.getAllShareDetails();
+        for (Share share : shareList) {
+            if (emp_id == share.getEmployee_id()) {
+                for (Manager manager : managerList) {
+                    if (share.getManager_id() == manager.getId()) {
+                        manager.setSelected("true");
+                    }
+                }
+            }
+        }
+//        System.out.println(managerList.get(0).getSelected());
+        model.addAttribute("listManagers", managerList);
+        model.addAttribute("emp_id", emp_id);
+        return "managers";
+    }
+
+    @GetMapping("/share/{emp_id}/{mng_id}")
+    public String shareDetails(@PathVariable(value = "emp_id") long emp_id, @PathVariable(value = "mng_id") long mng_id) {
+        Share share = new Share(emp_id, mng_id);
+        shareService.saveSharedDetails(share);
+        return "redirect:/managerPage/" + emp_id;
     }
 
     @GetMapping("/showNewEmployeeForm")
@@ -55,10 +107,9 @@ public class EmployeeController {
     public String filterDetails(@PathVariable(value = "value") String value, Model model) {
         List<Employee> employees = employeeService.getAllEmployees();
         List<Employee> filterResults = new ArrayList<>();
-        if(value.equalsIgnoreCase("All")){
+        if (value.equalsIgnoreCase("All")) {
             filterResults = employees;
-        }
-        else {
+        } else {
             for (Employee profile : employees) {
                 if (profile.getSkill_Set().equalsIgnoreCase(value)) {
                     filterResults.add(profile);
@@ -66,6 +117,7 @@ public class EmployeeController {
             }
         }
         model.addAttribute("listEmployees", filterResults);
+
         return "details";
     }
 
@@ -111,7 +163,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/track/{value}")
-    public String fetchByTrack(@PathVariable(value = "value") String subSkill, Model model){
+    public String fetchByTrack(@PathVariable(value = "value") String subSkill, Model model) {
         List<Employee> employee = employeeService.getEmployeesByTrack(subSkill);
 //        System.out.println(employee.get(0).getName());
         model.addAttribute("listEmployees", employee);
@@ -125,14 +177,12 @@ public class EmployeeController {
     }
 
     @GetMapping("/reject/{id}")
-    public String reject(@PathVariable (value = "id") long id, Model model)
-    {
+    public String reject(@PathVariable(value = "id") long id, Model model) {
         Employee employee = employeeService.getEmployeeById(id);
-        if(employee.getBlockCount() == 2){
+        if (employee.getBlockCount() == 2) {
             employee.setBlock("false");
             employee.setBlockCount(3);
-        }
-        else{
+        } else {
             employee.setBlockCount(employee.getBlockCount() + 1);
         }
         employeeService.saveEmployee(employee);
@@ -152,6 +202,6 @@ public class EmployeeController {
         model.addAttribute("totalPages", page.getTotalPages());
         model.addAttribute("totalItems", page.getTotalElements());
         model.addAttribute("listEmployees", listEmployees);
-        return "index";
+        return "details";
     }
 }

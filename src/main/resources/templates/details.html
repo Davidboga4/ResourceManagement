@@ -72,39 +72,29 @@
             <td th:text="${employee.Remarks}"></td>
             <td>
                 <a class="btn btn-secondary" th:if="${employee.block} != 'true'">Block</a>
-                <a class="btn btn-primary" th:if="${employee.block} == 'true'" th:href="@{/updateBlock/{id}(id=${employee.id})}">Block</a>
+<!--                <a class="btn btn-primary" th:if="${employee.block} == 'true'" th:href="@{/updateBlock/{id}(id=${employee.id})}">Block</a>-->
+                <a class="btn btn-primary" th:if="${employee.block} == 'true' and ${manager_block} != 'true' " th:href="@{/managerPage/{emp_id}(emp_id=${employee.id})}">Share</a>
                 <a class="btn btn-primary" th:if="${employee.block} == 'true'"
                    th:href="@{/formPage/{id}(id=${employee.id})}">Block Profile</a>
-                <a class="btn btn-primary" th:if="${employee.block} == 'true'" th:href="@{/reject/{id}(id=${employee.id})}">Reject</a>
+                <a class="btn btn-primary" th:if="${employee.block} == 'true' and ${manager_block} != 'true' " th:href="@{/reject/{id}(id=${employee.id})}">Reject</a>
                 <a class="btn btn-secondary" th:if="${employee.block} == 'false'">On-Hold</a>
             <td><a th:href="@{/deleteEmployee/{id}(id=${employee.id})}">Delete</a></td>
         </tr>
         </tbody>
     </table>
-    <div th:if="${totalPages > 1}">
+    <div th:if = "${totalPages > 1}">
         <div>
-            <div>
-                Total Rows: [[${totalItems}]]
-            </div>
-            <div>
-<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+            <div>Total Rows: [[${totalItems}]]</div>
+            <div ><span th:each="i: ${#numbers.sequence(1, totalPages)}">
 <a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}}"><button>[[${i}]]</button></a>
 <span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp;
-</span>
+</span></div>
+            <div>
+                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}"><button>Next</button></a>
+                <span th:unless="${currentPage < totalPages}"><button disabled>Next</button></span>
+                <a th:if="${currentPage == 1 }"><button disabled>Previous</button></a>
+                <a th:if= "${currentPage > 1 and currentPage <= totalPages}" th:href="@{'/page/' + ${currentPage - 1}}"><button>Previous</button></a>
             </div>
-            <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}}">
-                    <button>Next</button>
-                </a>
-                <span th:unless="${currentPage < totalPages}"><button>Next</button></span>
-            </div>
-            <div class="col-sm-1">
-                <a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage - 1}}">
-                    <button>Previous</button>
-                </a>
-                <span th:unless="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage - 1}}"><button>Previous</button></span>
-            </div>
-
         </div>
     </div>
     <a th:href="@{/availablePools}"> Back to Available Pool</a>

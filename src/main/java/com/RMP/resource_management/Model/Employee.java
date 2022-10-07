@@ -42,6 +42,9 @@ public class Employee {
     @Column
     private int blockCount;
 
+    @Column
+    private String manager;
+
     public long getId() {
         return id;
     }
@@ -140,5 +143,13 @@ public class Employee {
 
     public void setBlockCount(int blockCount) {
         this.blockCount = blockCount;
+    }
+
+    public String getManager() {
+        return manager;
+    }
+
+    public void setManager(String manager) {
+        this.manager = manager;
     }
 }
