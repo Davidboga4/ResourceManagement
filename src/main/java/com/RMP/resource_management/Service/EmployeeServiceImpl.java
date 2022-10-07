@@ -42,9 +42,6 @@ public class EmployeeServiceImpl implements EmployeeService {
                 }
             }
         }
-//    else {
-//        throw new RuntimeException(" Employee not found for id :: ");
-//    }
         return filterResults;
     }
 
@@ -54,12 +51,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         this.employeeRepository.save(employee);
     }
 
-
     @Override
     public void deleteEmployeeById(long id) {
         this.employeeRepository.deleteById(id);
     }
-
 
     @Override
     public Page<Employee> findPaginated(int pageNo, int pageSize) {
