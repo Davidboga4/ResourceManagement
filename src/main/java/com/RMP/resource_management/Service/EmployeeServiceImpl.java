@@ -28,24 +28,24 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findById(id).orElse(null);
     }
 
-
     @Override
-    public List<Employee> getEmployeesByTrack(String firstName) {
-        System.out.println(firstName);
-        List<Employee> optional = employeeRepository.findAll();
-        List<Employee> temp = new java.util.ArrayList<>(Collections.emptyList());
-        if (!optional.isEmpty()) {
-            for (Employee emp : optional) {
-                if (emp.getSkillset().toLowerCase().equals(firstName.toLowerCase())) {
-                    temp.add(emp);
-//                System.out.println(emp.getFirstName());
+    public List<Employee> getEmployeesByTrack(String subSkill) {
+        List<Employee> employeeList = employeeRepository.findAll();
+        List<Employee> filterResults = new java.util.ArrayList<>(Collections.emptyList());
+        if(subSkill.equalsIgnoreCase("All")){
+            filterResults = employeeList;
+        }
+        else if (!employeeList.isEmpty()) {
+            for (Employee emp : employeeList) {
+                if (emp.getSub_Set().equalsIgnoreCase(subSkill)) {
+                    filterResults.add(emp);
                 }
             }
         }
 //    else {
 //        throw new RuntimeException(" Employee not found for id :: ");
 //    }
-        return temp;
+        return filterResults;
     }
 
 

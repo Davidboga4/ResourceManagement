@@ -17,6 +17,6 @@ public interface EmployeeService {
     Page<Employee> findPaginated(int pageNo, int pageSize);
 
     Employee getEmployeeById(Long id);
-    List<Employee> getEmployeesByTrack(String firstName);
+    List<Employee> getEmployeesByTrack(String subSkill);
 //public List<Employee> getByKeyword(String keyword);
 }

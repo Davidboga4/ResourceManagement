@@ -54,14 +54,18 @@ public class EmployeeController {
     @GetMapping("/details/{value}")
     public String filterDetails(@PathVariable(value = "value") String value, Model model) {
         List<Employee> employees = employeeService.getAllEmployees();
-        List<Employee> temp = new ArrayList<Employee>();
-        ;
-        for (Employee profile : employees) {
-            if (profile.getSkillset().toLowerCase().equals(value.toLowerCase())) {
-                temp.add(profile);
+        List<Employee> filterResults = new ArrayList<>();
+        if(value.equalsIgnoreCase("All")){
+            filterResults = employees;
+        }
+        else {
+            for (Employee profile : employees) {
+                if (profile.getSkill_Set().equalsIgnoreCase(value)) {
+                    filterResults.add(profile);
+                }
             }
         }
-        model.addAttribute("listEmployees", temp);
+        model.addAttribute("listEmployees", filterResults);
         return "details";
     }
 
@@ -103,6 +107,14 @@ public class EmployeeController {
         employee.setBlock("false");
         this.employeeService.saveEmployee(employee);
         return "formPage";
+    }
+
+    @GetMapping("/track/{value}")
+    public String fetchByTrack(@PathVariable(value = "value") String subSkill, Model model){
+        List<Employee> employee = employeeService.getEmployeesByTrack(subSkill);
+//        System.out.println(employee.get(0).getName());
+        model.addAttribute("listEmployees", employee);
+        return "details";
     }
 
     @GetMapping("/deleteEmployee/{id}")

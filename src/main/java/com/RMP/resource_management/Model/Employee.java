@@ -80,14 +80,6 @@ public class Employee {
         DOJ = dOJ;
     }
 
-    public String getSkillset() {
-        return Skill_Set;
-    }
-
-    public void setSkillset(String skillSet) {
-        Skill_Set = skillSet;
-    }
-
     public String getRAS_Allocation() {
         return RAS_Allocation;
     }
@@ -112,16 +104,16 @@ public class Employee {
         Sub_Set = sub_Set;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getSkill_Set() {
         return Skill_Set;
     }
 
     public void setSkill_Set(String skill_Set) {
         Skill_Set = skill_Set;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getBlock() {

@@ -2,15 +2,48 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="ISO-8859-1">
+    <link rel="stylesheet" href="table.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Task 1</title>
 </head>
 <body>
-
-<div align="center">
-    <table border="2">
+<div class="dropdown pull-right">
+    <button class="btn btn-primary" type="button" style="width:150px;" data-toggle="dropdown">All
+        <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+        <li><a th:href="@{/details/All}">All</a>
+        <li><a th:href="@{/details/Java}">Java</a>
+            <ul>
+                <li><a th:href="@{/track/Micro Services}">Micro Services</a></li>
+                <li><a th:href="@{/track/ADVANCE JAVA}">ADVANCE JAVA</a></li>
+                <li><a th:href="@{/track/CORE JAVA}">CORE JAVA</a></li>
+            </ul>
+        </li>
+        <li><a th:href="@{/details/UI}">UI</a>
+            <ul>
+                <li><a th:href="@{/track/React}">React</a></li>
+                <li><a th:href="@{/track/JS}">JS</a></li>
+                <li><a th:href="@{/track/Angular}">Angular</a></li>
+            </ul>
+        </li>
+        <li><a th:href="@{/details/SDET}">SDET</a>
+            <ul>
+                <li><a th:href="@{/track/Selenium With Java}">Selenium With Java</a></li>
+                <li><a th:href="@{/track/Selenium With Python}">Selenium With Python</a></li>
+            </ul>
+        </li>
+        <li><a th:href="@{/details/DE}">DE</a></li>
+        <li><a th:href="@{/details/Support}">Support</a></li>
+    </ul>
+</div>
+<div align="center" class="container">
+    <table border="2" style="width:100%">
         <thead>
         <tr>
             <th> EmpID </th>

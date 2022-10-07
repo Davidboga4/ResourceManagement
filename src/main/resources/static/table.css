@@ -1,0 +1,52 @@
+.container
+{
+    width: 60%;
+    padding: 30px;
+    position: absolute;
+    margin-left: 12rem;
+    margin-top: 8rem;
+    border-radius: 18px;
+  }
+  
+ div table th{
+ background-color: Skyblue;
+ text-align: left;
+ } 
+ div table{
+	 width:100%;
+ }
+table, th, td {
+  border:1px solid black;
+}
+div table th,td {
+                width:60px;
+                text-align:center;
+                padding:5px;
+                
+}
+div p{
+  font-size:25px;
+}  
+  
+div button {
+  padding: 10px;
+  font-size: 15px;
+  text-align: center;
+  width: 100px;
+  cursor: pointer;
+  outline: none;
+  color: white;
+  background-color: black;
+  border: none;
+  border-radius: 15px;
+}
+
+div button:hover {
+	background-color: #303030;
+	color:white;
+	}
+
+div button:active {
+  background-color: grey;
+  transform: translateY(4px);
+  }
