@@ -2,7 +2,6 @@ package com.RMP.resource_management.Service;
 
 import java.util.Collections;
 import java.util.List;
-
 import com.RMP.resource_management.Model.Employee;
 import com.RMP.resource_management.Repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +18,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> getAllEmployees() {
-        List<Employee> list = (List<Employee>) employeeRepository.findAll();
-        return list;
+        return employeeRepository.findAll();
     }
 
     @Override
@@ -44,7 +42,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         return filterResults;
     }
-
 
     @Override
     public void saveEmployee(Employee employee) {

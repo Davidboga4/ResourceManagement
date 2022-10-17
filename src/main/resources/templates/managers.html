@@ -28,7 +28,7 @@
                 <a class="btn btn-secondary" th:if="${manager.selected} == 'true'">Selected</a>
                 <a class="btn btn-primary" th:if="${manager.selected} != 'true'"
                    th:href="@{/share/{emp_id}/{mng_id}(emp_id=${emp_id},mng_id=${manager.id})}">Select</a>
-                <!--        <a class="btn btn-secondary" th:if="${profile.manager} != null">Block</a>-->
+                        <a class="btn btn-primary" th:href="@{/manager/{id}(id=${manager.id})}">Go to Profile</a>
             </td>
             <!--      <td><a th:href="">Delete</a></td>-->
         </tr>

@@ -204,4 +204,5 @@ public class EmployeeController {
         model.addAttribute("listEmployees", listEmployees);
         return "details";
     }
+
 }
