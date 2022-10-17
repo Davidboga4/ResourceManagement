@@ -6,7 +6,6 @@ import java.util.List;
 import com.RMP.resource_management.Model.Employee;
 import org.springframework.data.domain.Page;
 
-
 public interface EmployeeService {
     List<Employee> getAllEmployees();
 
